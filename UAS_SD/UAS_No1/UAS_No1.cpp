@@ -60,7 +60,7 @@ void checkGameover(bool check) {
 		cout << "Peace has returned. Your journey is over.";
 	}
 	cout << endl;
-	
+
 }
 
 //check if player has collected atleast 1 bounty on every enemy type
@@ -162,11 +162,15 @@ void startGame() {
 	switch (opt) {
 	//starts a new game, resets save and asks for new initial save info
 	case 1: resetSave();break;
+	system("cls");
+    loading();
+    system("cls");
 
 	//dont do anything
 	case 2: {
 		system("cls");
 		loading();
+		system("cls");
 	}break;
 
 	//alert false input
@@ -374,7 +378,7 @@ void win (int i, int hp){
 
 	//return to main menu
 	system("pause");
-	loading(); 
+	loading();
 }
 
 //if player loses
@@ -432,14 +436,14 @@ void combat (){
 
 	//while enemy is still alive
 	while (enemys[enemy_select].hp >= 0){
-		
+
 		system("cls");
 		//display boss flavor text
 		if (enemy_select == enemy_index::admin && turn <= 1) cout << "The sky shattered. A palace of red descends from the sky.\n\n";
 		else if (enemy_select == enemy_index::admin && turn > 1) cout << boss_text() << "\n\n";
 		//display turn counter
 		cout<<"Turn "<<turn<<"\n";
-		
+
 		//display player and enemy stats
 		cout<<"Combat Stats :\n";
 		enemyStats(enemy_select);
@@ -504,7 +508,7 @@ void tavern() {
 			dayta.day_quota = dayta_quota;
 
 			cout << "The innkeeper smiled as he slid the key across the table.\n\"Thank you for your patronage.\"\nYou went upstairs and rested your weary soul on the bed.\n";
-			
+
 			cout << endl;
 			//check if its game over
 			checkGameover(dayta.finish);
@@ -526,7 +530,7 @@ void tavern() {
 			loading();
 			return;
 		}
-		
+
 	}break;
 	//advance a day, restore quota but dont heal
 	case homeless: {
@@ -705,7 +709,7 @@ int main() {
 	system("cls");
 	//starts game, new game or load game
 	startGame();
-	
+
 	//repeat until exit
 	do {
 		system("cls");
