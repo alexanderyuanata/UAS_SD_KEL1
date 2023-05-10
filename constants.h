@@ -11,12 +11,12 @@ enum tavern {
 
 //structure for enemies
 enemy enemys[]{
-	{"Gyarados",75, 500, 250, 150, },
-	{"P.E.K.K.A", 85, 1000, 300, 325},
-	{"Abyss Herald", 50, 2500, 350, 250},
-	{"Pudge", 150, 1750, 650, 650},
-	{"Omen", 200, 2500, 875, 1000},
-	{"Administrator", 500, 4500, 100000, 50000},
+	{"Goblin",75, 500, 250, 150, },
+	{"Skeleton", 85, 1000, 300, 325},
+	{"Ogre", 50, 2500, 350, 250},
+	{"Hellagur", 150, 1750, 650, 650},
+	{"Lich", 200, 2500, 875, 1000},
+	{"Satanael", 500, 4500, 100000, 50000},
 };
 
 //enemy damage variables
@@ -25,12 +25,12 @@ const float enemy_dmg_mult = 0.05;
 
 //enums for enemies index
 enum enemy_index {
-	gyardos = 0,
-	pekka = 1,
-	herald = 2,
-	pudge = 3,
-	omen = 4,
-	admin = 5
+	GOBLIN = 0,
+	SKELETON = 1,
+	OGRE = 2,
+	HELLAGUR = 3,
+	LICH = 4,
+	SATANAEL = 5
 };
 
 //enums for item access
