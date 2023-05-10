@@ -162,9 +162,6 @@ void startGame() {
 	switch (opt) {
 	//starts a new game, resets save and asks for new initial save info
 	case 1: resetSave();break;
-	system("cls");
-    loading();
-    system("cls");
 
 	//dont do anything
 	case 2: {
