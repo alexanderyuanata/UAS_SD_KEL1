@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1669355496 source:d:\elin\kuliah\lab daa\uts\utsdaa\main.cpp
+	<conio.h>
+	<stdlib.h>
+	<iostream>
+	<string.h>
+
