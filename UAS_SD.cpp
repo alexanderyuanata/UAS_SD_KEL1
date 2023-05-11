@@ -1,5 +1,8 @@
+//Libraries
 #include <iostream>
 #include <Windows.h>
+
+//Headers
 #include "data_structures.h"
 #include "save_load.h"
 #include "Randomize.h"
@@ -7,16 +10,7 @@
 #include "constants.h"
 
 using namespace std;
-/*
-1. Correct/Working
-2. Robust
-3. Concise
-4. Readable
-5. Modifiable
-6. Efficient
-*/
-
-
+//default player data
 playerData player{
 	500,
 	500,
@@ -43,7 +37,7 @@ void checkGameover(bool check) {
 	if (dayta.days >= day_length && !check) {
 		system("CLS");
 		cout << "Nothing is at is seems. You may grasp at the truth but you will grab hold of nothing.\n";
-		cout << "The " << day_length << " trials have been completed and you have failed, the world will restart.\n";
+		cout << "The " << day_length << " trials have been completed and you have failed, the world will reborn anew.\n";
 		system("pause");
 		system("CLS");
 		resetSave();
@@ -222,7 +216,7 @@ void fight (int i){
 	}
 
 	//if the enemy is the final boss
-	if (i == enemy_index::admin){
+	if (i == enemy_index::SATANAEL){
 		//roll for player and boss dice
 		int player_dice = getRand(1, 6);
 		int enemy_dice = getRand(1, 6);
@@ -246,8 +240,8 @@ void fight (int i){
 	}
 	//tell players about damage dealt and received
 	cout << "\n\nYou dealt " << temp_playerDmg << " damage to " << enemys[i].name << endl;
-	if ((enemys[i].hp > 0) && (i != enemy_index::admin)) cout << enemys[i].name << " dealt " << temp_enemyDmg << " damage to you.\n";
-	if ((enemys[i].hp > 0) && (i == enemy_index::admin)) cout << enemys[i].name << " attempted to erase " << player.name << " from existence,\ndealing " << temp_enemyDmg << " damage.";
+	if ((enemys[i].hp > 0) && (i != enemy_index::SATANAEL)) cout << enemys[i].name << " dealt " << temp_enemyDmg << " damage to you.\n";
+	if ((enemys[i].hp > 0) && (i == enemy_index::SATANAEL)) cout << enemys[i].name << " attempted to erase " << player.name << " from existence,\ndealing " << temp_enemyDmg << " damage.";
 }
 
 //for defense option
@@ -259,9 +253,9 @@ void defend (int i){
 	//Warriors get an advantage in defense
 	if (player.role == "Warrior") player_dice++;
 
-	//if the enemy is the admin then defenses dont do anything
-	if (i == enemy_index::admin){
-		cout<<"The administrator wills its attack through reality itself. Your defenses are futile.\n";
+	//if the enemy is the SATANAEL then defenses dont do anything
+	if (i == enemy_index::SATANAEL){
+		cout<<"The SATANAEListrator wills its attack through reality itself. Your defenses are futile.\n";
 		cout<<"You have taken "<<enemys[i].dmg<<" damage";
 		player.hp -= enemys[i].dmg;
 	//if its a normal enemy
@@ -405,7 +399,7 @@ void combat (){
 
 	//if you've collected 1 bounty on each of the monster available, boss fight is now available
 	if (bossFight()) {
-		cout << enemys[enemy_index::admin].name << " has descended to the game fix the anomaly\n" << "6. THE WOöLD öNDS WööH YöU\n";
+		cout << enemys[enemy_index::SATANAEL].name << " has descended to the game fix the anomaly\n" << "6. THE WOöLD öNDS WööH YöU\n";
 	}
 
 	//receive input
@@ -436,8 +430,8 @@ void combat (){
 
 		system("cls");
 		//display boss flavor text
-		if (enemy_select == enemy_index::admin && turn <= 1) cout << "The sky shattered. A palace of red descends from the sky.\n\n";
-		else if (enemy_select == enemy_index::admin && turn > 1) cout << boss_text() << "\n\n";
+		if (enemy_select == enemy_index::SATANAEL && turn <= 1) cout << "The sky shattered. A palace of red descends from the sky.\n\n";
+		else if (enemy_select == enemy_index::SATANAEL && turn > 1) cout << boss_text() << "\n\n";
 		//display turn counter
 		cout<<"Turn "<<turn<<"\n";
 
@@ -612,53 +606,40 @@ void explore() {
 	system("cls");
 	cout << "\"Hey, you need an explorer?\" the short, stout man asked.\n";
 	cout << "\"Or maybe intel? you look like someone who needs some intel.\"\n";
-	cout << "\"Here's what we got.\"\n1. Gyarados\n2. P.E.K.K.A\n3. Abyss Herald\n4. Pudge\n5. Omen\n6. Administrator";
+	cout << "\"Here's what we got.\"\n1. Goblins\n2. Skeletons\n3. Ogres\n4. Hellagurs\n5. Liches";
 	int select = getInputInt();
 
 	//tell the player monster stats and bounties collected
 	switch (select) {
 		case 1: {
 			cout << "Those Gyarados are some wild beasts. They live in warm temperature water and are\nomnivorous with an appetite for humans.\n";
-			cout << "HP  : " << enemys[gyardos].hp << endl;
-			cout << "DMG : " << enemys[gyardos].dmg << endl;
+			cout << "HP  : " << enemys[GOBLIN].hp << endl;
+			cout << "DMG : " << enemys[GOBLIN].dmg << endl;
 			cout << "You have collected " << current_bounty[0] << " bounties from this enemy.";
 		}break;
 		case 2: {
 			cout << "P.E.K.K.As are rumored to be the product of an ancient civilization. They attack\nhumans on sight, chop them down like firewood.\n";
-			cout << "HP  : " << enemys[pekka].hp << endl;
-			cout << "DMG : " << enemys[pekka].dmg << endl;
+			cout << "HP  : " << enemys[SKELETON].hp << endl;
+			cout << "DMG : " << enemys[SKELETON].dmg << endl;
 			cout << "You have collected " << current_bounty[1] << " bounties from this enemy.";
 		}break;
 		case 3: {
-			cout << "Abyss Heralds come from the dark side of the moon. They can dance and use void magic,\nplus their ethereal body makes them tanky as all hell.\n";
-			cout << "HP  : " << enemys[herald].hp << endl;
-			cout << "DMG : " << enemys[herald].dmg << endl;
+			cout << "Abyss OGREs come from the dark side of the moon. They can dance and use void magic,\nplus their ethereal body makes them tanky as all hell.\n";
+			cout << "HP  : " << enemys[OGRE].hp << endl;
+			cout << "DMG : " << enemys[OGRE].dmg << endl;
 			cout << "You have collected " << current_bounty[2] << " bounties from this enemy.";
 		}break;
 		case 4: {
-			cout << "Pudges are...something. They're necrotized avarice tissue from the land up north.\nThey eat anything that they can get their hands on.\n";
-			cout << "HP  : " << enemys[pudge].hp << endl;
-			cout << "DMG : " << enemys[pudge].dmg << endl;
+			cout << "HELLAGURs are...something. They're necrotized avarice tissue from the land up north.\nThey eat anything that they can get their hands on.\n";
+			cout << "HP  : " << enemys[HELLAGUR].hp << endl;
+			cout << "DMG : " << enemys[HELLAGUR].dmg << endl;
 			cout << "You have collected " << current_bounty[3] << " bounties from this enemy.";
 		}break;
 		case 5: {
-			cout << "Omens are-or should i say, were once-humans. They were struck with black magic and\nhave lost their sanity.\n";
-			cout << "HP  : " << enemys[omen].hp << endl;
-			cout << "DMG : " << enemys[omen].dmg << endl;
+			cout << "LICHs are-or should i say, were once-humans. They were struck with black magic and\nhave lost their sanity.\n";
+			cout << "HP  : " << enemys[LICH].hp << endl;
+			cout << "DMG : " << enemys[LICH].dmg << endl;
 			cout << "You have collected " << current_bounty[4] << " bounties from this enemy.";
-		}break;
-		case 6: {
-			if (current_bounty[admin] == 0) {
-				cout << "Error 404 not found. This page shouldn't be available\n";
-				cout << "HP  : ???"<< endl;
-				cout << "DMG : ???"<< endl;
-				cout << "How did you get here?";
-			} else {
-				cout << "The Administrator......you know who you're fighting with\n";
-				cout << "HP  : " << enemys[admin].hp << endl;
-				cout << "DMG : " << enemys[admin].dmg << endl;
-				cout << "You have collected " << current_bounty[5] << " bounties from this enemy.";
-			}
 		}break;
 	}
 	cout << endl;
