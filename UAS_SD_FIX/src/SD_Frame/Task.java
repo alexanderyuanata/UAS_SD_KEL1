@@ -4,19 +4,25 @@ public class Task {
     
     private String title = "";
     private String text = "";
+    private String date = "";
+    private String time = "";
     private boolean done = false;
     
     private Task next = null;
     
     //constructor
-    public Task(String title, String text){
+    public Task(String title, String text, String date, String time){
         this.title = title;
         this.text = text;
+        this.date = date;
+        this.time = time;
     }
     
-    public Task(String title, String text, Task next){
+    public Task(String title, String text, String date, String time, Task next){
         this.title = title;
         this.text = text;
+        this.date = date;
+        this.time = time;
         this.next = next;
     }
     
