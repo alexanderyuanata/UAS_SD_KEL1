@@ -5,6 +5,7 @@
 package SD_Frame;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -22,6 +23,7 @@ public class PopUp extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
+    //new
     public PopUp(MainWindow window, TaskList list) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -31,11 +33,12 @@ public class PopUp extends javax.swing.JFrame {
         this.list = list;
     }
 
+    //edit
     public PopUp(Task selected, MainWindow window) {
         initComponents();
         this.setLocationRelativeTo(null);
         ref = window;
-
+        
         if (selected == null) {
             JOptionPane.showMessageDialog(null, "Ada error dalam seleksi!");
             dispose();
@@ -328,13 +331,14 @@ public class PopUp extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PopUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PopUp().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

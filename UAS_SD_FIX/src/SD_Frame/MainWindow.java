@@ -7,6 +7,7 @@ package SD_Frame;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -203,11 +204,13 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void EditTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditTaskActionPerformed
         PopUp edit_window = new PopUp(selected, this);
+        edit_window.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         edit_window.setVisible(true);
     }//GEN-LAST:event_EditTaskActionPerformed
 
     private void AddTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddTaskActionPerformed
         PopUp add_task = new PopUp(this, tasklist);
+        add_task.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         add_task.setVisible(true);
     }//GEN-LAST:event_AddTaskActionPerformed
 
@@ -227,6 +230,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void ViewTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewTaskActionPerformed
         PopUp popup = new PopUp(selected);
+        popup.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         popup.setVisible(true);
     }//GEN-LAST:event_ViewTaskActionPerformed
 

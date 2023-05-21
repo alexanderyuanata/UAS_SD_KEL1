@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 //for mysql
 import java.sql.*;
+import javax.swing.WindowConstants;
 
 public class Login extends javax.swing.JFrame {
 
@@ -255,6 +256,7 @@ public class Login extends javax.swing.JFrame {
         //jika username password benar
         else if (authenticate(jUser.getText(), encryptSHA256(jPass.getText()))){
             MainWindow frame = new MainWindow();
+            frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             frame.setVisible(true);
 
             System.out.println("login berhasil");
