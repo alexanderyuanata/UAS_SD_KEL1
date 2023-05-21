@@ -2,7 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package sd_fix_2;
+package SD_Frame;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -29,8 +37,6 @@ public class Register extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        ExitButton = new javax.swing.JButton();
-        MinimizeButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jUser = new javax.swing.JTextField();
@@ -52,16 +58,6 @@ public class Register extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("     Please Fill in The Form to Complete Register");
 
-        ExitButton.setBackground(new java.awt.Color(255, 0, 0));
-        ExitButton.setText("X");
-        ExitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitButtonActionPerformed(evt);
-            }
-        });
-
-        MinimizeButton.setText("_");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -69,26 +65,15 @@ public class Register extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(MinimizeButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ExitButton))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ExitButton)
-                        .addComponent(MinimizeButton)))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
@@ -99,11 +84,29 @@ public class Register extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel3.setText("   Username :");
 
+        jUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jUserActionPerformed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel4.setText("    Password :");
 
+        jPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPassActionPerformed(evt);
+            }
+        });
+
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel5.setText("   Re-Enter Password :");
+
+        jConfirmPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jConfirmPassActionPerformed(evt);
+            }
+        });
 
         SaveRegisterButton.setText("Save");
         SaveRegisterButton.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +116,11 @@ public class Register extends javax.swing.JFrame {
         });
 
         BackToLoginButton.setText("Back");
+        BackToLoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackToLoginButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -183,13 +191,65 @@ public class Register extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ExitButtonActionPerformed
-
+    private void doRegister(){
+        if (!jPass.getText().equals(jConfirmPass.getText())){
+            JOptionPane.showMessageDialog(null, "Password tidak sama!");
+            return;
+        }
+        
+        DBConnector.initDBConnection();
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/uas_sd", "root", "");
+            Statement stmt = conn.createStatement();
+            
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS count FROM `login` WHERE `username` = '" + jUser.getText() + "';");
+            rs.next();
+            
+            if (rs.getInt("count") == 0){
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO `login` (`username`, `password_hash`) VALUES (?, ?)");
+                ps.setString(1, jUser.getText());
+                ps.setString(2, Login.encryptSHA256(jPass.getText()));
+                ps.execute();
+                
+                System.out.println("username: " + jUser.getText() + ", pass: " + Login.encryptSHA256(jPass.getText()));
+                
+                JOptionPane.showMessageDialog(null, "Akun berhasil dibuat!");
+                
+                Login frame = new Login();
+                frame.setVisible(true);
+                dispose();
+            }
+            else { 
+                JOptionPane.showMessageDialog(null, "Username sudah ada dalam sistem!");
+            }
+            
+        }
+        catch (SQLException ex){
+            System.out.println(ex.toString());
+        }
+    }
+    
     private void SaveRegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveRegisterButtonActionPerformed
-        // TODO add your handling code here:
+        doRegister();
     }//GEN-LAST:event_SaveRegisterButtonActionPerformed
+
+    private void BackToLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToLoginButtonActionPerformed
+        Login frame = new Login();
+        frame.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_BackToLoginButtonActionPerformed
+
+    private void jConfirmPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConfirmPassActionPerformed
+        doRegister();
+    }//GEN-LAST:event_jConfirmPassActionPerformed
+
+    private void jUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUserActionPerformed
+        jPass.requestFocus();
+    }//GEN-LAST:event_jUserActionPerformed
+
+    private void jPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPassActionPerformed
+        jConfirmPass.requestFocus();
+    }//GEN-LAST:event_jPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,8 +288,6 @@ public class Register extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackToLoginButton;
-    private javax.swing.JButton ExitButton;
-    private javax.swing.JButton MinimizeButton;
     private javax.swing.JButton SaveRegisterButton;
     private javax.swing.JPasswordField jConfirmPass;
     private javax.swing.JLabel jLabel1;
