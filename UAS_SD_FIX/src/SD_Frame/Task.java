@@ -11,6 +11,10 @@ public class Task implements Serializable {
     private Task next = null;
     
     //constructor
+    public Task(){
+        
+    }
+    
     public Task(String title, String text){
         this.title = title;
         this.text = text;

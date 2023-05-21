@@ -78,6 +78,37 @@ public class TaskList implements Serializable {
         members++;
     }
 
+    
+    //deletes a task
+    public void deleteTask(Task selected){
+        if (selected == this.head){
+            this.head = this.head.getNext();
+            members--;
+            return;
+        }
+        Task current = this.head;
+        
+        if (selected == this.tail){
+            while (current.getNext() != this.tail) {
+                current = current.getNext();
+            }
+            this.tail = current;
+            members--;
+        }
+        
+        Task prev = null;
+        
+        while (current != null){
+            if (current == selected){
+                prev.setNext(current.getNext());
+                members--;
+            }
+            prev = current;
+            current = current.getNext();
+        }
+    }
+    
+    
     //deletes tail and set to previous node
     public void deleteTail() {
         if (this.tail == this.head){
@@ -119,6 +150,7 @@ public class TaskList implements Serializable {
         prev.setNext(current.getNext());
         members--;
     }    
+    
     
     public TableModel createTableModel() {
         String[] columnNames = {"Title", "Done"};

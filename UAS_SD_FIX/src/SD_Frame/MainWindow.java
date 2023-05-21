@@ -4,41 +4,66 @@
  */
 package SD_Frame;
 
+import javax.swing.DefaultCellEditor;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
 
 /**
  *
  * @author Alex
  */
 public class MainWindow extends javax.swing.JFrame {
+
     Task selected = null;
-    /**
-     * Creates new form MainWindow
-     */
-    public MainWindow() {
-        initComponents();
-        
-        TaskList tasklist = SaveLoad.loadTaskList();
-        
+    TaskList tasklist = null;
+
+    public final void updateMainWindow() {
         DataTodo.setModel(tasklist.createTableModel());
+    }
+
+    public final void _init() {
         DataTodo.getColumnModel().getColumn(0).setPreferredWidth(640);
-        DataTodo.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
+        DataTodo.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
-             public void valueChanged(ListSelectionEvent e) {
+            public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     int selectedRow = DataTodo.getSelectedRow();
-                    if (selectedRow == 0) {
+                    if (selectedRow >= 0) {
                         selected = tasklist.getIndex(selectedRow + 1);
                         selected.displayData();
                     }
                 }
             }
         });
-        
-        DataTodo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setEnabled(false);
+        TableCellEditor editor = new DefaultCellEditor(new JTextField()) {
+            @Override
+            public boolean isCellEditable(java.util.EventObject e) {
+                return false;
+            }
+        };
+
+        int columnCount = DataTodo.getColumnCount();
+        for (int i = 0; i < columnCount; i++) {
+            DataTodo.getColumnModel().getColumn(i).setCellRenderer(renderer);
+            DataTodo.getColumnModel().getColumn(i).setCellEditor(editor);
+        }
+    }
+
+    public MainWindow() {
+        initComponents();
+
+        tasklist = SaveLoad.loadTaskList();
+
+        updateMainWindow();
+        _init();
     }
 
     /**
@@ -57,16 +82,32 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         DataTodo = new javax.swing.JTable();
+        SaveReturn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         WindowLabel.setText("MAIN WINDOW");
 
         AddTask.setText("Add");
+        AddTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddTaskActionPerformed(evt);
+            }
+        });
 
         EditTask.setText("Edit");
+        EditTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditTaskActionPerformed(evt);
+            }
+        });
 
         DeleteTask.setText("Delete");
+        DeleteTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteTaskActionPerformed(evt);
+            }
+        });
 
         DataTodo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -103,6 +144,13 @@ public class MainWindow extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jScrollPane1);
 
+        SaveReturn.setText("Save and Return");
+        SaveReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveReturnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,7 +164,8 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(AddTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(DeleteTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(EditTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(EditTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SaveReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
@@ -125,19 +174,45 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(WindowLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(AddTask)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(EditTask)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(DeleteTask))
+                        .addComponent(DeleteTask)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SaveReturn))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void EditTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditTaskActionPerformed
+        PopUp edit_window = new PopUp(selected, this);
+        edit_window.setVisible(true);
+    }//GEN-LAST:event_EditTaskActionPerformed
+
+    private void AddTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddTaskActionPerformed
+        PopUp add_task = new PopUp(this, tasklist);
+        add_task.setVisible(true);
+    }//GEN-LAST:event_AddTaskActionPerformed
+
+    private void SaveReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveReturnActionPerformed
+        Login frame = new Login();
+        frame.setVisible(true);
+
+        SaveLoad.saveTaskList(tasklist);
+        dispose();
+    }//GEN-LAST:event_SaveReturnActionPerformed
+
+    private void DeleteTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteTaskActionPerformed
+        tasklist.deleteTask(selected);
+        updateMainWindow();
+        _init();
+    }//GEN-LAST:event_DeleteTaskActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,6 +254,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTable DataTodo;
     private javax.swing.JButton DeleteTask;
     private javax.swing.JButton EditTask;
+    private javax.swing.JButton SaveReturn;
     private javax.swing.JLabel WindowLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
