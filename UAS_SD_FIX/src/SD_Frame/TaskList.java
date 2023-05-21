@@ -1,6 +1,10 @@
     package SD_Frame;
 
-public class TaskList {
+import java.io.Serializable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+public class TaskList implements Serializable {
 
     private Task head;
     private Task tail;
@@ -115,6 +119,20 @@ public class TaskList {
         prev.setNext(current.getNext());
         members--;
     }    
+    
+    public TableModel createTableModel() {
+        String[] columnNames = {"Title", "Done"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        Task current = head;
+        while (current != null) {
+            Object[] rowData = {current.getTitle(), current.getDone()};
+            model.addRow(rowData);
+            current = current.getNext();
+        }
+
+        return model;
+    }
     
     //get
     //ambil head

@@ -1,34 +1,39 @@
 package SD_Frame;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
     
     private String title = "";
     private String text = "";
-    private String date = "";
-    private String time = "";
     private boolean done = false;
     
     private Task next = null;
     
     //constructor
-    public Task(String title, String text, String date, String time){
+    public Task(String title, String text){
         this.title = title;
         this.text = text;
-        this.date = date;
-        this.time = time;
     }
     
-    public Task(String title, String text, String date, String time, Task next){
+    public Task(String title, String text, boolean done){
         this.title = title;
         this.text = text;
-        this.date = date;
-        this.time = time;
+        this.done = done;
+    }
+    
+    public Task(String title, String text, Task next){
+        this.title = title;
+        this.text = text;
         this.next = next;
     }
     
     
     //methods
     
+    public void displayData(){
+        System.out.println("title: " + this.title + ", done: " + this.done + ", desc: " + this.text);
+    }
     
     //get
     public Task getNext(){
@@ -41,6 +46,10 @@ public class Task {
     
     public String getText(){
         return this.text;
+    }
+    
+    public boolean getDone(){
+        return this.done;
     }
     
     //set

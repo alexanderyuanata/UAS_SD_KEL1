@@ -231,6 +231,7 @@ public class Register extends javax.swing.JFrame {
     
     private void SaveRegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveRegisterButtonActionPerformed
         doRegister();
+        SaveLoad.saveTaskList(new TaskList(new Task("A", "descripsi imut cumut cumut", true)));
     }//GEN-LAST:event_SaveRegisterButtonActionPerformed
 
     private void BackToLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackToLoginButtonActionPerformed

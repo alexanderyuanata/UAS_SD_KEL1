@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2023 at 05:03 AM
+-- Generation Time: May 21, 2023 at 09:58 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -37,30 +37,12 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`username`, `password_hash`) VALUES
-('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tasks`
---
-
-CREATE TABLE `tasks` (
-  `id` int UNSIGNED NOT NULL,
-  `title` varchar(50) NOT NULL,
-  `description` text NOT NULL
-);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_tasks`
---
-
-CREATE TABLE `user_tasks` (
-  `username` varchar(50) NOT NULL,
-  `task_id` int UNSIGNED NOT NULL
-);
+('aaa', '9834876dcfb05cb167a5c24953eba58c4ac89b1adf57f28f2f9d09af107ee8f0'),
+('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'),
+('alex', '4135aa9dc1b842a653dea846903ddb95bfb8c5a10c504a7fa16e10bc31d1fdf0'),
+('karin', '74744f0df5ee17034e3a391aa6bc1dc4d0db08f108a178d0198b177255ddb0c3'),
+('riyan', '4598c9779c420d63fc285c108e40503f135db281fd20b196c39bed6df1aa2790'),
+('sutri', 'e0dba81e4b4bb375520c6f42e441551300df87e60b15dda524e61aad4927ad5e');
 
 --
 -- Indexes for dumped tables
@@ -71,40 +53,6 @@ CREATE TABLE `user_tasks` (
 --
 ALTER TABLE `login`
   ADD PRIMARY KEY (`username`);
-
---
--- Indexes for table `tasks`
---
-ALTER TABLE `tasks`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_tasks`
---
-ALTER TABLE `user_tasks`
-  ADD KEY `task_id` (`task_id`),
-  ADD KEY `username` (`username`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tasks`
---
-ALTER TABLE `tasks`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `user_tasks`
---
-ALTER TABLE `user_tasks`
-  ADD CONSTRAINT `user_tasks_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_tasks_ibfk_2` FOREIGN KEY (`username`) REFERENCES `login` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

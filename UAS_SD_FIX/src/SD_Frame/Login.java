@@ -241,9 +241,10 @@ public class Login extends javax.swing.JFrame {
         //jika username password benar
         else if (authenticate(jUser.getText(), encryptSHA256(jPass.getText()))){
             MainWindow frame = new MainWindow();
-            frame.setVisible(true);            
-            dispose();
+            frame.setVisible(true);
+
             System.out.println("login berhasil");
+            dispose();
         }
         //jika username password salah
         else{
