@@ -83,6 +83,7 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         DataTodo = new javax.swing.JTable();
         SaveReturn = new javax.swing.JButton();
+        ViewTask = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,6 +152,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        ViewTask.setText("View");
+        ViewTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ViewTaskActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -165,7 +173,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(AddTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(DeleteTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(EditTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SaveReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(SaveReturn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ViewTask, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
@@ -181,6 +190,8 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(EditTask)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(DeleteTask)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ViewTask)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(SaveReturn))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -213,6 +224,11 @@ public class MainWindow extends javax.swing.JFrame {
         updateMainWindow();
         _init();
     }//GEN-LAST:event_DeleteTaskActionPerformed
+
+    private void ViewTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewTaskActionPerformed
+        PopUp popup = new PopUp(selected);
+        popup.setVisible(true);
+    }//GEN-LAST:event_ViewTaskActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,6 +271,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton DeleteTask;
     private javax.swing.JButton EditTask;
     private javax.swing.JButton SaveReturn;
+    private javax.swing.JButton ViewTask;
     private javax.swing.JLabel WindowLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

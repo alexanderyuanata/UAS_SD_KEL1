@@ -15,6 +15,7 @@ public class PopUp extends javax.swing.JFrame {
     TaskList list = null;
     MainWindow ref = null;
     boolean edit = true;
+    boolean view = false;
     
     public PopUp() {
         initComponents();
@@ -46,6 +47,21 @@ public class PopUp extends javax.swing.JFrame {
             task = selected;
         }
 
+    }
+    
+    public PopUp(Task selected) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        
+        view = true;
+        
+        DescField.setText(selected.getText());
+        DescField.setEditable(false);
+        TitleField.setText(selected.getTitle());
+        TitleField.setEditable(false);
+        DoneField.setSelected(selected.getDone());
+        DoneField.setEnabled(false);
+        SaveButton.setVisible(false);
     }
 
     /**
@@ -253,8 +269,10 @@ public class PopUp extends javax.swing.JFrame {
     }//GEN-LAST:event_DescFieldActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
-        ref.updateMainWindow();
-        ref._init();
+        if (!view){
+            ref.updateMainWindow();
+            ref._init();
+        }
         dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 

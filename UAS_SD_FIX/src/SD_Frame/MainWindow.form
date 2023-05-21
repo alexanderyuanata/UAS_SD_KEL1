@@ -35,6 +35,7 @@
                   <Component id="DeleteTask" alignment="0" max="32767" attributes="0"/>
                   <Component id="EditTask" alignment="0" max="32767" attributes="0"/>
                   <Component id="SaveReturn" alignment="0" max="32767" attributes="0"/>
+                  <Component id="ViewTask" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
@@ -53,6 +54,8 @@
                       <Component id="EditTask" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="DeleteTask" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="ViewTask" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="SaveReturn" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -142,6 +145,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SaveReturnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="ViewTask">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ViewTaskActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
